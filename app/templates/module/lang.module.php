@@ -1,8 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $lang = array(
-	'tickets_module_name' => '<%= moduleName %>',
-	'tickets_module_description' => '',
+	'<%= moduleSlug %>_module_name' => '<%= moduleName %>',
+	'<%= moduleSlug %>_module_description' => '',
 );
 
 /* End of file lang.<%= moduleSlug %>.php */
