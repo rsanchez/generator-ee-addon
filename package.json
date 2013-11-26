@@ -1,7 +1,7 @@
 {
   "name": "generator-ee-module",
   "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "description": "An Expressionengine Module generator for Yeoman",
   "keywords": [
     "yeoman-generator",
     "expressionengine",
@@ -11,7 +11,7 @@
   "bugs": "https://github.com/webtogether/generator-ee-module/issues",
   "author": {
     "name": "Abban Dunne",
-    "email": "",
+    "email": "info@webtogether.ie",
     "url": "https://github.com/webtogether"
   },
   "main": "app/index.js",
