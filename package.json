@@ -3,19 +3,21 @@
   "version": "0.0.0",
   "description": "A generator for Yeoman",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "expressionengine",
+    "expressionengine-module"
   ],
-  "homepage": "https://github.com/Abban/generator-ee-module",
-  "bugs": "https://github.com/Abban/generator-ee-module/issues",
+  "homepage": "https://github.com/webtogether/generator-ee-module",
+  "bugs": "https://github.com/webtogether/generator-ee-module/issues",
   "author": {
     "name": "Abban Dunne",
     "email": "",
-    "url": "https://github.com/Abban"
+    "url": "https://github.com/webtogether"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Abban/generator-ee-module.git"
+    "url": "git://github.com/webtogether/generator-ee-module.git"
   },
   "scripts": {
     "test": "mocha"
