@@ -1,4 +1,4 @@
-# generator-ee-module [![Build Status](https://secure.travis-ci.org/Abban/generator-ee-module.png?branch=master)](https://travis-ci.org/Abban/generator-ee-module)
+# generator-ee-module
 
 A generator for [Yeoman](http://yeoman.io).
 
