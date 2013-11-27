@@ -126,7 +126,7 @@ EeModuleGenerator.prototype.app = function app()
 	this.template('module/upd.module.php', moduleFolder + '/upd.' + this.moduleSlug + '.php');
 	this.template('module/mod.module.php', moduleFolder + '/mod.' + this.moduleSlug + '.php');
 	this.template('module/mcp.module.php', moduleFolder + '/mcp.' + this.moduleSlug + '.php');
-	this.template('module/model.php', moduleFolder + '/models/' + this.moduleSlug + '.php');
+	this.template('module/model.php', moduleFolder + '/models/' + this.moduleSlug + '_model.php');
 	this.template('module/library.php', moduleFolder + '/libraries/' + this.moduleSlug + '.php');
 	this.template('module/helper.php', moduleFolder + '/helpers/' + this.moduleSlug + '_helper.php');
 	this.template('module/lang.module.php', moduleFolder + '/language/english/lang.' + this.moduleSlug + '.php');
