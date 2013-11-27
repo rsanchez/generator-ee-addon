@@ -5,7 +5,7 @@ module.exports = function(grunt)
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sourceDir: 'themes/third_party/' + moduleSlug,
+        sourceDir: 'themes/third_party/<%= moduleSlug %>',
 
         jshint: {
             files: ['<%%= sourceDir %>/js/src/*.js'],
