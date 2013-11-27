@@ -35,6 +35,30 @@ class <%= _.capitalize(moduleSlug) %>
 	{
 		
 	}
+
+
+
+	/**
+	 * Print a link to the front end script
+	 * 
+	 * @return string
+	 */
+	public function scripts()
+	{
+		return '<script src="' .URL_THIRD_THEMES .'<%= moduleSlug %>/js/script.min.js"></script>';
+	}
+
+
+
+	/**
+	 * Print a link to the front end styles
+	 * 
+	 * @return string
+	 */
+	public function styles()
+	{
+		return '<link rel="stylesheet" href="' .URL_THIRD_THEMES .'<%= moduleSlug %>/css/style.css">';
+	}
 }
 /* End of file mod.<%= moduleSlug %>.php */
 /* Location: /system/expressionengine/third_party/<%= moduleSlug %>/mod.<%= moduleSlug %>.php */

@@ -70,26 +70,28 @@ class <%= _.capitalize(moduleSlug) %>_upd
 
 		$fields = array(
 			// Keys
-			'entity_id'    => array('type' => 'INT', 'unsigned' => TRUE, 'auto_increment' => TRUE),
-			'foreign_id'   => array('type' => 'INT', 'unsigned' => TRUE, 'default' => 0),
+			'entity_id'  => array('type' => 'INT', 'unsigned' => TRUE, 'auto_increment' => TRUE),
+			'site_id'    => array('type' => 'INT', 'unsigned' => TRUE, 'default' => 0),
+			'foreign_id' => array('type' => 'INT', 'unsigned' => TRUE, 'default' => 0),
 			
 			// Text
-			'title'        => array('type' => 'VARCHAR', 'constraint' => '255', 'default' => ''),
-			'url_title'    => array('type' => 'VARCHAR', 'constraint' => '255', 'default' => ''),
-			'content'      => array('type' => 'TEXT', 'default' => ''),
+			'title'      => array('type' => 'VARCHAR', 'constraint' => '255', 'default' => ''),
+			'url_title'  => array('type' => 'VARCHAR', 'constraint' => '255', 'default' => ''),
+			'content'    => array('type' => 'TEXT', 'default' => ''),
 			
 			// Dates
-			'created'      => array('type' => 'DATETIME'),
-			'updated'      => array('type' => 'DATETIME'),
+			'created'    => array('type' => 'DATETIME'),
+			'updated'    => array('type' => 'DATETIME'),
 			
 			// Misc
-			'status'       => array('type' => 'ENUM', 'constraint' => "'Open', 'Closed', 'Cancelled'", 'default'=> 'Open'),
-			'private'      => array('type' => 'BOOL', 'default' => 0),
+			'status'     => array('type' => 'ENUM', 'constraint' => "'Open', 'Closed', 'Cancelled'", 'default'=> 'Open'),
+			'private'    => array('type' => 'BOOL', 'default' => 0),
 		);
 
 		ee()->dbforge->add_field($fields);
 		ee()->dbforge->add_key('entity_id', TRUE);
 		ee()->dbforge->add_key('foreign_id');
+		ee()->dbforge->add_key('site_id');
 		ee()->dbforge->create_table('table_name', TRUE);
 		
 		return TRUE;
