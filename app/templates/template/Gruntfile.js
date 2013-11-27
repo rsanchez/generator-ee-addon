@@ -25,7 +25,7 @@ module.exports = function(grunt)
             },
             build: {
                 src: ['<%%= sourceDir %>/js/src/*.js'],
-                dest: '<%%= sourceDir %>/js/cp.js'
+                dest: '<%%= sourceDir %>/js/cp.min.js'
             }
         },
 
@@ -34,7 +34,7 @@ module.exports = function(grunt)
                 banner: '/*! <%%= pkg.name %> <%%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: '<%%= sourceDir %>/js/cp.js',
+                src: '<%%= sourceDir %>/js/cp.min.js',
                 dest: '<%%= sourceDir %>/js/cp.min.js'
             }
         },
