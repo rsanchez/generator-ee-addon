@@ -1,6 +1,6 @@
 # generator-ee-module
 
-A generator for [Yeoman](http://yeoman.io).
+An Expressionengine module generator for [Yeoman](http://yeoman.io).
 
 
 ## Getting Started
