@@ -91,7 +91,7 @@ EeModuleGenerator.prototype.app = function app()
 		this.mkdir('themes/third_party/' + this.moduleSlug);
 		this.mkdir('themes/third_party/' + this.moduleSlug + '/js');
 		this.mkdir('themes/third_party/' + this.moduleSlug + '/js/src');
-		this.mkdir('themes/third_party/' + this.moduleSlug + '/sass');
+		this.mkdir('themes/third_party/' + this.moduleSlug + '/scss');
 		this.mkdir('themes/third_party/' + this.moduleSlug + '/css');
 		this.template('Gruntfile.js', 'Gruntfile.js');
 	}
@@ -106,7 +106,7 @@ EeModuleGenerator.prototype.app = function app()
 		this.mkdir('templates/default_site');
 		this.mkdir(assetsFolder);
 		this.mkdir(assetsFolder + '/css');
-		this.mkdir(assetsFolder + '/sass');
+		this.mkdir(assetsFolder + '/scss');
 		this.mkdir(assetsFolder + '/js');
 		this.mkdir(assetsFolder + '/js/src');
 		this.mkdir(templateFolder);
