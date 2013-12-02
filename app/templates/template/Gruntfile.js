@@ -5,10 +5,9 @@ module.exports = function(grunt)
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sourceDir: 'assets',
 
         jshint: {
-            files: ['<%%= sourceDir %>/js/src/*.js'],
+            files: ['js/src/*.js'],
             options: {
                 globals: {
                     jQuery: true,
@@ -24,8 +23,8 @@ module.exports = function(grunt)
                 separator: ';'
             },
             build: {
-                src: ['<%%= sourceDir %>/js/src/*.js'],
-                dest: '<%%= sourceDir %>/js/cp.min.js'
+                src: ['js/src/*.js'],
+                dest: 'js/script.min.js'
             }
         },
 
@@ -34,8 +33,8 @@ module.exports = function(grunt)
                 banner: '/*! <%%= pkg.name %> <%%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: '<%%= sourceDir %>/js/cp.min.js',
-                dest: '<%%= sourceDir %>/js/cp.min.js'
+                src: 'js/script.min.js',
+                dest: 'js/script.min.js'
             }
         },
 
@@ -44,17 +43,17 @@ module.exports = function(grunt)
                 style: 'expanded'
             },
             dist: {
-                files: { '<%%= sourceDir %>/css/cp.css': '<%%= sourceDir %>/scss/cp.scss' }
+                files: { 'css/style.css': 'scss/style.scss' }
             }
         },
 
         watch: {
             scripts: {
-                files: ['<%%= sourceDir %>/js/src/*.js'],
+                files: ['js/src/*.js'],
                 tasks: ['buildScripts']
             },
             styles: {
-                files: ['<%%= sourceDir %>/scss/*.scss'],
+                files: ['scss/*.scss'],
                 tasks: ['buildStyles']
             }
         }

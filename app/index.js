@@ -112,11 +112,11 @@ EeModuleGenerator.prototype.app = function app()
 		this.mkdir(templateFolder);
 
 		// Install some samples
-		this.template('template/header.html', templateFolder + '/header.html');
+		this.template('template/header.html', templateFolder + '/_header.html');
 		this.template('template/index.html', templateFolder + '/index.html');
-		this.template('template/footer.html', templateFolder + '/footer.html');
-		this.template('template/Gruntfile.js', 'templates/default_site/Gruntfile.js');
-		this.template('template/_package.json', 'templates/default_site/package.json');
+		this.template('template/footer.html', templateFolder + '/_footer.html');
+		this.template('template/Gruntfile.js', 'templates/default_site/assets/Gruntfile.js');
+		this.template('template/_package.json', 'templates/default_site/assets/package.json');
 	}
 
 	this.template('_package.json', 'package.json');
