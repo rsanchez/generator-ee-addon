@@ -1,6 +1,6 @@
 {
   "name": "generator-ee-addon",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "An ExpressionEngine Add-On generator for Yeoman",
   "keywords": [
     "yeoman-generator",
