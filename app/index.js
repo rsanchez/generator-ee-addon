@@ -160,6 +160,19 @@ EeModuleGenerator.prototype.askFor = function askFor()
       name: 'hasTheme',
       message: 'Does this add-on need theme files?',
       default: false
+    },
+    {
+      name: 'systemPath',
+      message: 'What is the system path?',
+      default: 'system/expressionengine/third_party/'
+    },
+    {
+      name: 'themePath',
+      message: 'What is the system path?',
+      default: 'themes/third_party/',
+      when: function(data) {
+        return data.hasTheme;
+      }
     }
   ];
 
@@ -185,26 +198,23 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.hasFieldtypeGlobalSettings = props.hasFieldtypeGlobalSettings;
     this.hasFieldtypeTagPair = props.hasFieldtypeTagPair;
     this.hasLang = (this.hasExtensionSettings || this.hasModule);
+    this.systemPath = props.systemPath.replace(/\/$/, '') + '/';
+    this.themePath = (this.hasTheme) ? props.themePath.replace(/\/$/, '') + '/' : null;
     cb();
   }.bind(this));
 };
 
 EeModuleGenerator.prototype.app = function app()
 {
-  var folder = 'system/expressionengine/third_party/' + this.addonSlug;
+  var folder = this.systemPath + this.addonSlug;
 
   // Make the system folders
-  this.mkdir('system');
-  this.mkdir('system/expressionengine');
-  this.mkdir('system/expressionengine/third_party');
   this.mkdir(folder);
 
   if (this.hasTheme) {
     // Make the theme folders
-    this.mkdir('themes');
-    this.mkdir('themes/third_party');
-    this.mkdir('themes/third_party/' + this.addonSlug);
-    this.template('index.html', 'themes/third_party/' + this.addonSlug + '/index.html');
+    this.mkdir(this.themePath + this.addonSlug);
+    this.template('index.html', this.themePath + this.addonSlug + '/index.html');
   }
 
   // Install module files
