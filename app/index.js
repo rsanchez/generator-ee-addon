@@ -6,134 +6,237 @@ var yeoman = require('yeoman-generator');
 
 var EeModuleGenerator = module.exports = function EeModuleGenerator(args, options, config)
 {
-	yeoman.generators.Base.apply(this, arguments);
-
-	this.on('end', function ()
-	{
-		this.installDependencies({ skipInstall: options['skip-install'] });
-	});
-
-	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+  yeoman.generators.Base.apply(this, arguments);
 };
 
 util.inherits(EeModuleGenerator, yeoman.generators.Base);
 
 EeModuleGenerator.prototype.askFor = function askFor()
 {
-	var cb = this.async();
+  var cb = this.async();
 
-	// have Yeoman greet the user.
-	console.log(this.yeoman);
+  // have Yeoman greet the user.
+  console.log(this.yeoman);
 
-	var prompts = [
-	{
-		name: 'moduleName',
-		message: 'What do you want to call your module?'
-	},
-	{
-		name: 'moduleSlug',
-		message: 'What EE slug and class name do you want to give your module?'
-	},
-	{
-		name: 'moduleUsername',
-		message: 'What is your name?'
-	},
-	{
-		name: 'moduleURL',
-		message: 'What is your URL?'
-	},
-	{
-		type: 'confirm',
-		name: 'hasTheme',
-		message: 'Does this module need theme files?',
-		default: true
-	},
-	{
-		type: 'confirm',
-		name: 'hasTemplate',
-		message: 'Do you want template files for this module?',
-		default: true
-	}];
+  var prompts = [
+    {
+      name: 'addonTypes',
+      message: 'Which Add-On type(s) are you making?',
+      type: 'checkbox',
+      required: true,
+      default: [],
+      validate: function(data) {
+        return (data.length > 0) ? true : 'You must choose an Add-On type.';
+      },
+      choices: [
+        {
+          name: 'Plugin',
+          value: 'plugin',
+        },
+        {
+          name: 'Extension',
+          value: 'extension',
+        },
+        {
+          name: 'Module',
+          value: 'module',
+        },
+        {
+          name: 'Fieldtype',
+          value: 'fieldtype',
+        },
+        {
+          name: 'Accessory',
+          value: 'accessory',
+        },
+      ]
+    },
+    {
+      name: 'addonName',
+      message: 'What do you want to name your Add-On? (ex. Google Maps)',
+      validate: function(data) {
+        return (data.length > 0) ? true : 'You must choose an Add-On name.';
+      }
+    },
+    {
+      name: 'addonSlug',
+      message: 'What slug name do you want to give your Add-On? (ex. google_maps)',
+      validate: function(data) {
+        return (data.length > 0) ? true : 'You must choose an Add-On slug.';
+      }
+    },
+    {
+      name: 'addonDescription',
+      message: 'What is Add-On description?',
+      when: function(data) {
+        return data.addonTypes.indexOf('plugin') !== -1 ||
+               data.addonTypes.indexOf('accessory') !== -1 ||
+               data.addonTypes.indexOf('extension') !== -1 ||
+               data.addonTypes.indexOf('module') !== -1;
+      }
+    },
+    {
+      name: 'authorName',
+      message: 'What is your name?'
+    },
+    {
+      name: 'authorUrl',
+      message: 'What is your URL?'
+    },
+    {
+      type: 'confirm',
+      name: 'hasExtensionSettings',
+      message: 'Does the extension have settings?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('extension') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasModuleMod',
+      message: 'Does the module need a mod file for template tags?',
+      default: true,
+      when: function(data) {
+        return data.addonTypes.indexOf('module') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasModuleMcp',
+      message: 'Does the module need an mcp file for control panel views or actions?',
+      default: true,
+      when: function(data) {
+        return data.addonTypes.indexOf('module') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasModuleCp',
+      message: 'Does the module have a control panel backend?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('module') !== -1 && data.hasModuleMcp;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasModuleTab',
+      message: 'Does the module have a publish tab?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('module') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasFieldtypeSettings',
+      message: 'Does the fieldtype have settings?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('fieldtype') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasFieldtypeGlobalSettings',
+      message: 'Does the fieldtype have global settings?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('fieldtype') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasFieldtypeTagPair',
+      message: 'Does the fieldtype have a tag pair?',
+      default: false,
+      when: function(data) {
+        return data.addonTypes.indexOf('fieldtype') !== -1;
+      }
+    },
+    {
+      type: 'confirm',
+      name: 'hasTheme',
+      message: 'Does this Add-On need theme files?',
+      default: false
+    }
+  ];
 
-	this.prompt(prompts, function (props)
-	{
-		this.hasTheme       = props.hasTheme;
-		this.hasTemplate    = props.hasTemplate;
-		this.moduleName     = props.moduleName;
-		this.moduleSlug     = props.moduleSlug;
-		this.moduleUsername = props.moduleUsername;
-		this.moduleURL      = props.moduleURL;
-		cb();
-	}.bind(this));
+  this.prompt(prompts, function (props)
+  {
+    this.hasPlugin = props.addonTypes.indexOf('plugin') !== -1;
+    this.hasExtension = props.addonTypes.indexOf('extension') !== -1;
+    this.hasModule = props.addonTypes.indexOf('module') !== -1;
+    this.hasFieldtype = props.addonTypes.indexOf('fieldtype') !== -1;
+    this.hasAccessory = props.addonTypes.indexOf('accessory') !== -1;
+    this.hasTheme = props.hasTheme;
+    this.addonName = props.addonName;
+    this.addonSlug = props.addonSlug;
+    this.addonDescription = props.addonDescription;
+    this.authorName = props.authorName;
+    this.authorUrl = props.authorUrl;
+    this.hasExtensionSettings = props.hasExtensionSettings;
+    this.hasModuleMod = props.hasModuleMod;
+    this.hasModuleMcp = props.hasModuleMcp;
+    this.hasModuleCp = props.hasModuleCp;
+    this.hasModuleTab = props.hasModuleTab;
+    this.hasFieldtypeSettings = props.hasFieldtypeSettings;
+    this.hasFieldtypeGlobalSettings = props.hasFieldtypeGlobalSettings;
+    this.hasFieldtypeTagPair = props.hasFieldtypeTagPair;
+    this.hasLang = (this.hasExtensionSettings || this.hasModule);
+    cb();
+  }.bind(this));
 };
 
 EeModuleGenerator.prototype.app = function app()
 {
-	var moduleFolder = 'system/expressionengine/third_party/' + this.moduleSlug;
+  var folder = 'system/expressionengine/third_party/' + this.addonSlug;
 
-	// Make the system folders
-	this.mkdir('system');
-	this.mkdir('system/expressionengine');
-	this.mkdir('system/expressionengine/third_party');
-	this.mkdir(moduleFolder);
-	this.mkdir(moduleFolder + '/helpers');
-	this.mkdir(moduleFolder + '/language');
-	this.mkdir(moduleFolder + '/language/english');
-	this.mkdir(moduleFolder + '/libraries');
-	this.mkdir(moduleFolder + '/models');
-	this.mkdir(moduleFolder + '/views');
+  // Make the system folders
+  this.mkdir('system');
+  this.mkdir('system/expressionengine');
+  this.mkdir('system/expressionengine/third_party');
+  this.mkdir(folder);
 
-	if(this.hasTheme)
-	{
-		// Make the theme folders
-		this.mkdir('themes');
-		this.mkdir('themes/third_party');
-		this.mkdir('themes/third_party/' + this.moduleSlug);
-		this.mkdir('themes/third_party/' + this.moduleSlug + '/js');
-		this.mkdir('themes/third_party/' + this.moduleSlug + '/js/src');
-		this.mkdir('themes/third_party/' + this.moduleSlug + '/scss');
-		this.mkdir('themes/third_party/' + this.moduleSlug + '/css');
-		this.template('Gruntfile.js', 'Gruntfile.js');
-	}
+  if (this.hasTheme) {
+    // Make the theme folders
+    this.mkdir('themes');
+    this.mkdir('themes/third_party');
+    this.mkdir('themes/third_party/' + this.addonSlug);
+    this.template('index.html', 'themes/third_party/' + this.addonSlug + '/index.html');
+  }
 
-	if(this.hasTemplate)
-	{
-		var templateFolder = 'templates/default_site/' + this.moduleSlug + '.group';
-		var assetsFolder = 'templates/default_site/assets';
+  // Install module files
+  if (this.hasModule) {
+    this.template('upd.php', folder + '/upd.' + this.addonSlug + '.php');
+    if (this.hasModuleMod) {
+      this.template('mod.php', folder + '/mod.' + this.addonSlug + '.php');
+    }
+    if ( ! this.hasModuleMod || this.hasModuleMcp) {
+      this.template('mcp.php', folder + '/mcp.' + this.addonSlug + '.php');
+    }
+  }
 
-		// Make a template group for front end files
-		this.mkdir('templates');
-		this.mkdir('templates/default_site');
-		this.mkdir(assetsFolder);
-		this.mkdir(assetsFolder + '/css');
-		this.mkdir(assetsFolder + '/scss');
-		this.mkdir(assetsFolder + '/js');
-		this.mkdir(assetsFolder + '/js/src');
-		this.mkdir(templateFolder);
+  if (this.hasLang) {
+    this.mkdir(folder + '/language');
+    this.mkdir(folder + '/language/english');
+    this.template('lang.php', folder + '/language/english/' + this.addonSlug + '_lang.php');
+  }
 
-		// Install some samples
-		this.template('template/header.html', templateFolder + '/_header.html');
-		this.template('template/index.html', templateFolder + '/index.html');
-		this.template('template/footer.html', templateFolder + '/_footer.html');
-		this.template('template/Gruntfile.js', 'templates/default_site/assets/Gruntfile.js');
-		this.template('template/_package.json', 'templates/default_site/assets/package.json');
-	}
+  if (this.hasExtension) {
+    this.template('ext.php', folder + '/ext.' + this.addonSlug + '.php');
+  }
 
-	this.template('_package.json', 'package.json');
-	this.template('README.md', 'README.md');
+  if (this.hasPlugin) {
+    this.template('pi.php', folder + '/pi.' + this.addonSlug + '.php');
+  }
 
-	// Install module files
-	this.template('module/upd.module.php', moduleFolder + '/upd.' + this.moduleSlug + '.php');
-	this.template('module/mod.module.php', moduleFolder + '/mod.' + this.moduleSlug + '.php');
-	this.template('module/mcp.module.php', moduleFolder + '/mcp.' + this.moduleSlug + '.php');
-	this.template('module/model.php', moduleFolder + '/models/' + this.moduleSlug + '_model.php');
-	this.template('module/library.php', moduleFolder + '/libraries/' + this.moduleSlug + '.php');
-	this.template('module/helper.php', moduleFolder + '/helpers/' + this.moduleSlug + '_helper.php');
-	this.template('module/lang.module.php', moduleFolder + '/language/english/lang.' + this.moduleSlug + '.php');
-	this.template('module/index.php', moduleFolder + '/views/index.php');
-};
+  if (this.hasAccessory) {
+    this.template('acc.php', folder + '/acc.' + this.addonSlug + '.php');
+  }
 
-EeModuleGenerator.prototype.runtime = function runtime()
-{
-	this.copy('gitignore', '.gitignore');
+  if (this.hasFieldtype) {
+    this.template('ft.php', folder + '/ft.' + this.addonSlug + '.php');
+  }
 };

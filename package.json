@@ -1,23 +1,29 @@
 {
-  "name": "generator-ee-module",
+  "name": "generator-ee-addon",
   "version": "0.0.0",
-  "description": "An Expressionengine Module generator for Yeoman",
+  "description": "An ExpressionEngine Add-On generator for Yeoman",
   "keywords": [
     "yeoman-generator",
-    "expressionengine",
-    "expressionengine-module"
+    "expressionengine"
   ],
-  "homepage": "https://github.com/webtogether/generator-ee-module",
-  "bugs": "https://github.com/webtogether/generator-ee-module/issues",
+  "homepage": "https://github.com/rsanchez/generator-ee-addon",
+  "bugs": "https://github.com/rsanchez/generator-ee-addon/issues",
   "author": {
-    "name": "Abban Dunne",
-    "email": "info@webtogether.ie",
-    "url": "https://github.com/webtogether"
+    "name": "Rob Sanchez",
+    "email": "info@robsanchez.com",
+    "url": "https://github.com/rsanchez"
   },
+  "contributors": [
+    {
+      "name": "Abban Dunne",
+      "email": "info@webtogether.ie",
+      "url": "https://github.com/webtogether"
+    }
+  ],
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/webtogether/generator-ee-module.git"
+    "url": "git://github.com/rsanchez/generator-ee-addon.git"
   },
   "scripts": {
     "test": "mocha"
