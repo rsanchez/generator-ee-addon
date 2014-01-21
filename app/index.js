@@ -21,12 +21,12 @@ EeModuleGenerator.prototype.askFor = function askFor()
   var prompts = [
     {
       name: 'addonTypes',
-      message: 'Which Add-On type(s) are you making?',
+      message: 'Which add-on type(s) are you making?',
       type: 'checkbox',
       required: true,
       default: [],
       validate: function(data) {
-        return (data.length > 0) ? true : 'You must choose an Add-On type.';
+        return (data.length > 0) ? true : 'You must choose an add-on type.';
       },
       choices: [
         {
@@ -53,21 +53,21 @@ EeModuleGenerator.prototype.askFor = function askFor()
     },
     {
       name: 'addonName',
-      message: 'What do you want to name your Add-On? (ex. Google Maps)',
+      message: 'What do you want to name your add-on? (ex. Google Maps)',
       validate: function(data) {
-        return (data.length > 0) ? true : 'You must choose an Add-On name.';
+        return (data.length > 0) ? true : 'You must choose an add-on name.';
       }
     },
     {
       name: 'addonSlug',
-      message: 'What slug name do you want to give your Add-On? (ex. google_maps)',
+      message: 'What slug name do you want to give your add-on? (ex. google_maps)',
       validate: function(data) {
-        return (data.length > 0) ? true : 'You must choose an Add-On slug.';
+        return (data.length > 0) ? true : 'You must choose an add-on slug.';
       }
     },
     {
       name: 'addonDescription',
-      message: 'What is Add-On description?',
+      message: 'What is the description for this add-on?',
       when: function(data) {
         return data.addonTypes.indexOf('plugin') !== -1 ||
                data.addonTypes.indexOf('accessory') !== -1 ||
@@ -158,7 +158,7 @@ EeModuleGenerator.prototype.askFor = function askFor()
     {
       type: 'confirm',
       name: 'hasTheme',
-      message: 'Does this Add-On need theme files?',
+      message: 'Does this add-on need theme files?',
       default: false
     }
   ];
