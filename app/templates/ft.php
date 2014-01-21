@@ -25,7 +25,7 @@
 class <%= _.capitalize(addonSlug) %> {
 
   public $info = array(
-    'name' => '<%= addonName &>',
+    'name' => '<%= addonName %>',
     'version' => '1.0.0',
   );
 
@@ -211,7 +211,7 @@ class <%= _.capitalize(addonSlug) %> {
     return $this->_save_settings($data);
   }
 <% } %>
-<% if (hasFieldTypeGlobalSettings) { %>
+<% if (hasFieldtypeGlobalSettings) { %>
   public function display_global_settings()
   {
     return form_label('license_key', 'license_key').NBS.form_input('license_key', $this->settings['license_key']);
