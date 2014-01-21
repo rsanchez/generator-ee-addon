@@ -23,10 +23,10 @@
  */
 class <%= _.capitalize(addonSlug) %>_mcp
 {
-  public function index()
-  {
+	public function index()
+	{
 
-  }
+	}
 }
 /* End of file mcp.<%= addonSlug %>.php */
 /* Location: /system/expressionengine/third_party/<%= addonSlug %>/mcp.<%= addonSlug %>.php */
