@@ -1,6 +1,20 @@
 # generator-ee-addon
 
-An ExpressionEngine Add-On generator for [Yeoman](http://yeoman.io).
+An ExpressionEngine Add-On generator for [Yeoman](http://yeoman.io). Capable of building modules, plugins, extensions, accessories and fieldtypes.
+
+### Prerequisites
+
+Install Node.js
+
+```
+brew install node
+```
+
+Install `yo`
+
+```
+npm install -g yo
+```
 
 ### Installation
 
@@ -13,6 +27,8 @@ $ npm install -g generator-ee-addon
 ```
 $ yo ee-addon
 ```
+
+![image](http://rsanchez.github.io/generator-ee-addon/images/screenshot.png)
 
 ## Credits
 
