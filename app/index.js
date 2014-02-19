@@ -18,6 +18,8 @@ EeModuleGenerator.prototype.askFor = function askFor()
   // have Yeoman greet the user.
   console.log(this.yeoman);
 
+  var self = this;
+
   var prompts = [
     {
       name: 'addonTypes',
@@ -80,11 +82,18 @@ EeModuleGenerator.prototype.askFor = function askFor()
     },
     {
       name: 'authorName',
-      message: 'What is your name?'
+      message: 'What is your name?',
+      default: function(data) {
+        return self.user.git.username;
+      }
     },
     {
       name: 'authorUrl',
-      message: 'What is your URL?'
+      message: 'What is your URL?',
+      default: function(data) {
+        var username = self.shell.exec('git config --get github.user', { silent: true }).output.trim();
+        return username ? 'https://github.com/'+username : '';
+      }
     },
     {
       type: 'confirm',
