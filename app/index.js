@@ -61,6 +61,9 @@ EeModuleGenerator.prototype.askFor = function askFor()
     {
       name: 'addonSlug',
       message: 'What slug name do you want to give your add-on? (ex. google_maps)',
+      default: function(data) {
+        return data.addonName.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+      },
       validate: function(data) {
         return (data.length > 0) ? true : 'You must choose an add-on slug.';
       }
