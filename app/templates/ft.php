@@ -40,6 +40,7 @@ class <%= _.capitalize(addonSlug) %> {
      */
     public function _display_field($data, $field_name)
     {
+        // Uncomment if you have any CSS/JS to be loaded once per fieldtype
         /*
         if ( ! $this->session->cache(__CLASS__, __FUNCTION__))
         {
@@ -61,14 +62,17 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_display_field($data, $this->field_name);
     }
+<% if (fieldtypeLowVariablesSupport) { %>
 
     /**
      * Display Low Variable field
      **/
     public function display_var_field($data)
     {
-        return $this->_display_field($data, $this->field_name));
+        return $this->_display_field($data, $this->field_name);
     }
+<% } %>
+<% if (fieldtypeMatrixSupport) { %>
 
     /**
      * Display Matrix cell field
@@ -77,6 +81,7 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_display_field($data, $this->cell_name);
     }
+<% } %>
 
     /**
      * Save
@@ -88,6 +93,7 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $data;
     }
+<% if (fieldtypeLowVariablesSupport) { %>
 
     /**
      * Save Low Variable
@@ -96,6 +102,9 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->save($data);
     }
+<% } %>
+<% if (fieldtypeMatrixSupport) { %>
+
     /**
      * Save Matrix cell
      **/
@@ -103,6 +112,7 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->save($data);
     }
+<% } %>
 
     /**
      * Pre Process
@@ -131,6 +141,7 @@ class <%= _.capitalize(addonSlug) %> {
         return $data;
         <% } %>
     }
+<% if (fieldtypeLowVariablesSupport) { %>
 
     /**
      * Replace Low Variable tag
@@ -139,6 +150,7 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->replace_tag($data, $params, $tagdata);
     }
+<% } %>
 <% if (hasFieldtypeSettings) { %>
     public function _display_settings($data)
     {
@@ -160,6 +172,7 @@ class <%= _.capitalize(addonSlug) %> {
             ee()->table->add_row($row[0], $row[1]);
         }
     }
+<% if (fieldtypeMatrixSupport) { %>
 
     /**
      * Display Matrix cell settings
@@ -168,6 +181,8 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_display_settings($data);
     }
+<% } %>
+<% if (fieldtypeLowVariablesSupport) { %>
 
     /**
      * Display Low Variable settings
@@ -176,11 +191,13 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_display_settings($data);
     }
+<% } %>
 
     public function _save_settings($data)
     {
         return array(
-            'your_setting' => isset($data['your_setting']) ? $data['your_setting'] : FALSE,
+            // uncomment to add settings
+            //'your_setting' => isset($data['your_setting']) ? $data['your_setting'] : FALSE,
         );
     }
 
@@ -194,6 +211,7 @@ class <%= _.capitalize(addonSlug) %> {
             'field_show_fmt' => 'n',
         ));
     }
+<% if (fieldtypeMatrixSupport) { %>
 
     /**
      * Save Matrix cell settings
@@ -202,6 +220,8 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_save_settings($data);
     }
+<% } %>
+<% if (fieldtypeLowVariablesSupport) { %>
 
     /**
      * Save Low Variable settings
@@ -210,6 +230,7 @@ class <%= _.capitalize(addonSlug) %> {
     {
         return $this->_save_settings($data);
     }
+<% } %>
 <% } %>
 <% if (hasFieldtypeGlobalSettings) { %>
     public function display_global_settings()

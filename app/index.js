@@ -157,6 +157,37 @@ EeModuleGenerator.prototype.askFor = function askFor()
       }
     },
     {
+      name: 'fieldtypeSupport',
+      message: 'Which field types do you want to support?',
+      type: 'checkbox',
+      required: false,
+      choices: [
+        {
+          name: 'Matrix',
+          value: 'matrix',
+          checked: true
+        },
+        {
+          name: 'Grid',
+          value: 'grid',
+          checked: true
+        },
+        {
+          name: 'Low Variables',
+          value: 'low_variables',
+          checked: true
+        },
+        {
+          name: 'Content Elements',
+          value: 'content_elements',
+          checked: true
+        }
+      ],
+      when: function(data) {
+        return data.addonTypes.indexOf('fieldtype') !== -1;
+      }
+    },
+    {
       type: 'confirm',
       name: 'hasFieldtypeGlobalSettings',
       message: 'Does the fieldtype have global settings?',
@@ -213,6 +244,11 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.hasModuleMcp = props.hasModuleMcp;
     this.hasModuleCp = props.hasModuleCp;
     this.hasModuleTab = props.hasModuleTab;
+    this.fieldtypeSupport = props.fieldtypeSupport;
+    this.fieldtypeMatrixSupport = props.fieldtypeSupport.indexOf('matrix') !== -1;
+    this.fieldtypeGridSupport = props.fieldtypeSupport.indexOf('grid') !== -1;
+    this.fieldtypeLowVariablesSupport = props.fieldtypeSupport.indexOf('low_variables') !== -1;
+    this.fieldtypeContentElementsSupport = props.fieldtypeSupport.indexOf('content_elements') !== -1;
     this.hasFieldtypeSettings = props.hasFieldtypeSettings;
     this.hasFieldtypeGlobalSettings = props.hasFieldtypeGlobalSettings;
     this.hasFieldtypeTagPair = props.hasFieldtypeTagPair;
