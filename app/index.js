@@ -84,14 +84,21 @@ EeModuleGenerator.prototype.askFor = function askFor()
       name: 'authorName',
       message: 'What is your name?',
       default: function(data) {
-        return self.user.git.username;
+        return self.config.get('authorName') || self.user.git.username;
       }
     },
     {
       name: 'authorUrl',
       message: 'What is your URL?',
       default: function(data) {
-        var username = self.shell.exec('git config --get github.user', { silent: true }).output.trim();
+        var authorUrl = self.config.get('authorUrl'),
+            username;
+
+        if (authorUrl) {
+          return authorUrl;
+        }
+
+        username = self.shell.exec('git config --get github.user', { silent: true }).output.trim();
         return username ? 'https://github.com/'+username : '';
       }
     },
@@ -219,6 +226,10 @@ EeModuleGenerator.prototype.askFor = function askFor()
 EeModuleGenerator.prototype.app = function app()
 {
   var folder = this.systemPath + this.addonSlug;
+
+  // cache these for future use
+  this.config.set('authorName', this.authorName);
+  this.config.set('authorUrl', this.authorUrl);
 
   // Make the system folders
   this.mkdir(folder);
