@@ -82,6 +82,16 @@ class <%= _.capitalize(addonSlug) %> {
         return $this->_display_field($data, $this->cell_name);
     }
 <% } %>
+<% if (fieldtypeContentElementsSupport) { %>
+
+    /**
+     * Display Content Elements element
+     **/
+    public function display_element($data)
+    {
+        return $this->_display_field($data, $this->field_name);
+    }
+<% } %>
 
     /**
      * Save
@@ -141,6 +151,16 @@ class <%= _.capitalize(addonSlug) %> {
         return $data;
         <% } %>
     }
+<% if (fieldtypeContentElementsSupport) { %>
+
+    /**
+     * Replace Content Elements element tag
+     **/
+    public function replace_element_tag($data, $params = array(), $tagdata = false)
+    {
+        return $this->replace_tag($data, $params, $tagdata);
+    }
+<% } %>
 <% if (fieldtypeLowVariablesSupport) { %>
 
     /**
