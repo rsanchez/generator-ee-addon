@@ -182,6 +182,16 @@ class <%= _.capitalize(addonSlug) %> {
         return $this->_display_settings($data);
     }
 <% } %>
+<% if (fieldtypeGridSupport) { %>
+
+    /**
+     * Display Grid cell settings
+     **/
+    public function grid_display_settings($data)
+    {
+        return $this->_display_settings($data);
+    }
+<% } %>
 <% if (fieldtypeLowVariablesSupport) { %>
 
     /**
@@ -241,6 +251,13 @@ class <%= _.capitalize(addonSlug) %> {
     public function save_global_settings()
     {
         return array_merge($this->settings, $_POST);
+    }
+<% } %>
+<% if (fieldtypeGridSupport) { %>
+
+    public function accepts_content_type($name)
+    {
+        return $name === 'channel' || $name === 'grid';
     }
 <% } %>
 }
