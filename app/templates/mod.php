@@ -7,21 +7,20 @@
  * @author    ExpressionEngine Dev Team
  * @copyright Copyright (c) 2003 - 2014, EllisLab, Inc.
  * @license   http://expressionengine.com/user_guide/license.html
- * @link    http://expressionengine.com
- * @since   Version 2.0
+ * @link      http://expressionengine.com
+ * @since     Version 2.0
  * @filesource
  */
 
 /**
  * <%= addonName %> Module Front End File
  *
- * @package   ExpressionEngine
- * @subpackage  Addons
- * @category  Module
- * @author    <%= authorName %>
- * @link    <%= authorUrl %>
+ * @package    ExpressionEngine
+ * @subpackage Addons
+ * @category   Module
+ * @author     <%= authorName %>
+ * @link       <%= authorUrl %>
  */
-
 class <%= _.capitalize(addonSlug) %>
 {
   public $return_data;

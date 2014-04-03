@@ -5,21 +5,11 @@
  *
  * @package   ExpressionEngine
  * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - 2014, EllisLab, Inc.
+ * @copyright Copyright (c) 2003 - <?= currentYear %>, EllisLab, Inc.
  * @license   http://expressionengine.com/user_guide/license.html
- * @link    http://expressionengine.com
- * @since   Version 2.0
+ * @link      http://expressionengine.com
+ * @since     Version 2.0
  * @filesource
- */
-
-/**
- * <%= addonName %> Plugin
- *
- * @package   ExpressionEngine
- * @subpackage  Addons
- * @category  Plugin
- * @author    <%= authorName %>
- * @link    <%= authorUrl %>
  */
 
 $plugin_info = array(
@@ -31,9 +21,17 @@ $plugin_info = array(
     'pi_usage'    => ''
 );
 
-
-class <%= _.capitalize(addonSlug) %> {
-
+/**
+ * <%= addonName %> Plugin
+ *
+ * @package    ExpressionEngine
+ * @subpackage Addons
+ * @category   Plugin
+ * @author     <%= authorName %>
+ * @link       <%= authorUrl %>
+ */
+class <%= _.capitalize(addonSlug) %>
+{
     public $return_data;
 
     /**
@@ -43,7 +41,6 @@ class <%= _.capitalize(addonSlug) %> {
     {
     }
 }
-
 
 /* End of file pi.<%= addonSlug %>.php */
 /* Location: /system/expressionengine/third_party/<%= addonSlug %>/pi.<%= addonSlug %>.php */

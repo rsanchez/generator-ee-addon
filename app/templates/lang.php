@@ -1,10 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$lang = array(
-    <% if (hasModule) { %>
+$lang = array(<% if (hasModule) { %>
     '<%= addonSlug + '_module_name' %>' => '<%= addonName %>',
-    '<%= addonSlug + '_module_description' %>' => '<%= addonDescription %>',
-    <% } %>
+    '<%= addonSlug + '_module_description' %>' => '<%= addonDescription %>',<% } %>
 );
 
 /* End of file <%= addonSlug %>_lang.php */

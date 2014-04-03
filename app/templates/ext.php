@@ -5,33 +5,30 @@
  *
  * @package   ExpressionEngine
  * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - 2014, EllisLab, Inc.
+ * @copyright Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
  * @license   http://expressionengine.com/user_guide/license.html
- * @link    http://expressionengine.com
- * @since   Version 2.0
+ * @link      http://expressionengine.com
+ * @since     Version 2.0
  * @filesource
  */
-
-// ------------------------------------------------------------------------
 
 /**
  * <%= addonName %> Extension
  *
- * @package   ExpressionEngine
- * @subpackage  Addons
- * @category  Extension
- * @author    <%= authorName %>
- * @link    <%= authorUrl %>
+ * @package    ExpressionEngine
+ * @subpackage Addons
+ * @category   Extension
+ * @author     <%= authorName %>
+ * @link       <%= authorUrl %>
  */
-
-class <%= _.capitalize(addonSlug) %>_ext {
-
-    public $settings    = array();
-    public $description   = '<%= addonDescription %>';
-    public $docs_url    = '';
-    public $name      = '<%= addonName %>';
-    public $settings_exist  = '<%= hasExtensionSettings ? "y" : "n" %>';
-    public $version     = '1.0.0';
+class <%= _.capitalize(addonSlug) %>_ext
+{
+    public $settings       = array();
+    public $description    = '<%= addonDescription %>';
+    public $docs_url       = '';
+    public $name           = '<%= addonName %>';
+    public $settings_exist = '<%= hasExtensionSettings ? "y" : "n" %>';
+    public $version        = '1.0.0';
 
     /**
      * Constructor
@@ -42,8 +39,6 @@ class <%= _.capitalize(addonSlug) %>_ext {
     {
         $this->settings = $settings;
     }
-
-    // ----------------------------------------------------------------------
 
     /**
      * Activate Extension
@@ -60,34 +55,28 @@ class <%= _.capitalize(addonSlug) %>_ext {
         // Setup custom settings in this array.
         $this->settings = array();
 
-        $data = array(
-            'class' => __CLASS__,
-            'method' => 'channel_entries_query_result',
-            'hook' => 'channel_entries_query_result',
-            'settings' => serialize($this->settings),
-            'version' => $this->version,
-            'enabled' => 'y',
-        );
-
-        ee()->db->insert('extensions', $data);
-
+        ee()->db->insert_batch('extensions', array(<% _.forEach(extensionHooks, function(extensionHook, index) { %>
+            array(
+                'class' => __CLASS__,
+                'method' => '<%= extensionMethods[index] %>',
+                'hook' => '<%= extensionHook %>',
+                'settings' => serialize($this->settings),
+                'version' => $this->version,
+                'enabled' => 'y',
+            ),<% }); %>
+        ));
     }
-
-    // ----------------------------------------------------------------------
-
+<% _.forEach(extensionHooks, function(extensionHook, index) { %>
     /**
-     * channel_entries_query_result
+     * <%= extensionHook %> Hook
      *
      * @param
      * @return
      */
-    public function channel_entries_query_result()
+    public function <%= extensionMethods[index] %>()
     {
-        // Add Code for the channel_entries_query_result hook here.
     }
-
-    // ----------------------------------------------------------------------
-
+<% }); %>
     /**
      * Disable Extension
      *
@@ -99,8 +88,6 @@ class <%= _.capitalize(addonSlug) %>_ext {
     {
         ee()->db->delete('extensions', array('class' => __CLASS__));
     }
-
-    // ----------------------------------------------------------------------
 
     /**
      * Update Extension
@@ -117,8 +104,6 @@ class <%= _.capitalize(addonSlug) %>_ext {
             return FALSE;
         }
     }
-
-    // ----------------------------------------------------------------------
 }
 
 /* End of file ext.<%= addonSlug %>.php */

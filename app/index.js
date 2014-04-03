@@ -20,6 +20,21 @@ EeModuleGenerator.prototype.askFor = function askFor()
 
   var self = this;
 
+  var gitUser = this.shell.exec('git config --get github.user', { silent: true }).output.trim();
+
+  this.defaultAuthorName = this.config.get('authorName') || this.user.git.username,
+  this.defaultAuthorUrl = this.config.get('authorUrl'),
+  this.defaultSystemPath = this.config.get('systemPath') || 'system/expressionengine/third_party/',
+  this.defaultThemePath = this.config.get('themePath') || 'themes/third_party/';
+
+  if ( ! this.defaultAuthorUrl && gitUser) {
+    this.defaultAuthorUrl = 'https://github.com/' + gitUser;
+  }
+
+  this.extensionHooks = [];
+  this.extensionMethods = [];
+  this.currentYear = (new Date()).getFullYear();
+
   var prompts = [
     {
       name: 'addonTypes',
@@ -83,23 +98,30 @@ EeModuleGenerator.prototype.askFor = function askFor()
     {
       name: 'authorName',
       message: 'What is your name?',
-      default: function(data) {
-        return self.config.get('authorName') || self.user.git.username;
-      }
+      default: this.defaultAuthorName
     },
     {
       name: 'authorUrl',
       message: 'What is your URL?',
-      default: function(data) {
-        var authorUrl = self.config.get('authorUrl'),
-            username;
-
-        if (authorUrl) {
-          return authorUrl;
-        }
-
-        username = self.shell.exec('git config --get github.user', { silent: true }).output.trim();
-        return username ? 'https://github.com/'+username : '';
+      default: this.defaultAuthorUrl
+    },
+    {
+      type: 'confirm',
+      name: 'hasTheme',
+      message: 'Does this add-on need theme files?',
+      default: false
+    },
+    {
+      name: 'systemPath',
+      message: 'What is the system path?',
+      default: this.defaultSystemPath
+    },
+    {
+      name: 'themePath',
+      message: 'What is the system path?',
+      default: this.defaultThemePath,
+      when: function(data) {
+        return data.hasTheme;
       }
     },
     {
@@ -205,25 +227,6 @@ EeModuleGenerator.prototype.askFor = function askFor()
       when: function(data) {
         return data.addonTypes.indexOf('fieldtype') !== -1;
       }
-    },
-    {
-      type: 'confirm',
-      name: 'hasTheme',
-      message: 'Does this add-on need theme files?',
-      default: false
-    },
-    {
-      name: 'systemPath',
-      message: 'What is the system path?',
-      default: 'system/expressionengine/third_party/'
-    },
-    {
-      name: 'themePath',
-      message: 'What is the system path?',
-      default: 'themes/third_party/',
-      when: function(data) {
-        return data.hasTheme;
-      }
     }
   ];
 
@@ -256,8 +259,51 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.hasLang = (this.hasExtensionSettings || this.hasModule);
     this.systemPath = props.systemPath.replace(/\/$/, '') + '/';
     this.themePath = (this.hasTheme) ? props.themePath.replace(/\/$/, '') + '/' : null;
-    cb();
+    if (this.hasExtension) {
+      getExtensionHook();
+    } else {
+      cb();
+    }
   }.bind(this));
+
+  function getExtensionHook() {
+    var hasHooks = self.extensionHooks.length > 0,
+        hookMessage = hasHooks ? 'Add another extension hook (Leave blank to complete generator):' : 'Which extension hook does this extension use?';
+
+    self.prompt([
+      {
+        name: 'extensionHook',
+        message: hookMessage,
+        default: function(data) {
+          return hasHooks ? '' : 'channel_entries_query';
+        },
+        validate: function(data) {
+          return (hasHooks || data.length > 0) ? true : 'You must choose an extension hook.';
+        }
+      },
+      {
+        name: 'extensionMethod',
+        message: 'What method name does the prior hook use?',
+        default: function(data) {
+          return data.extensionHook;
+        },
+        when: function(data) {
+          return data.extensionHook;
+        },
+        validate: function(data) {
+          return (data.length > 0) ? true : 'You must choose a method name.';
+        }
+      }
+    ], function(props) {
+      if (props.extensionHook) {
+        self.extensionHooks.push(props.extensionHook);
+        self.extensionMethods.push(props.extensionMethod);
+        getExtensionHook();
+      } else {
+        cb();
+      }
+    });
+  }
 };
 
 EeModuleGenerator.prototype.app = function app()
@@ -265,8 +311,18 @@ EeModuleGenerator.prototype.app = function app()
   var folder = this.systemPath + this.addonSlug;
 
   // cache these for future use
-  this.config.set('authorName', this.authorName);
-  this.config.set('authorUrl', this.authorUrl);
+  if (this.authorName && this.authorName !== this.defaultAuthorName) {
+    this.config.set('authorName', this.authorName);
+  }
+  if (this.authorUrl && this.authorUrl !== this.defaultAuthorUrl) {
+    this.config.set('authorUrl', this.authorUrl);
+  }
+  if (this.systemPath !== this.defaultSystemPath) {
+    this.config.set('systemPath', this.systemPath);
+  }
+  if (this.themePath && this.themePath !== this.defaultThemePath) {
+    this.config.set('themePath', this.themePath);
+  }
 
   // Make the system folders
   this.mkdir(folder);

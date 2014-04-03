@@ -5,23 +5,22 @@
  *
  * @package   ExpressionEngine
  * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - 2014, EllisLab, Inc.
+ * @copyright Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
  * @license   http://expressionengine.com/user_guide/license.html
- * @link    http://expressionengine.com
- * @since   Version 2.0
+ * @link      http://expressionengine.com
+ * @since     Version 2.0
  * @filesource
  */
 
 /**
  * <%= addonName %> Module Install/Update File
  *
- * @package   ExpressionEngine
- * @subpackage  Addons
- * @category  Module
- * @author    <%= authorName %>
- * @link    <%= authorUrl %>
+ * @package    ExpressionEngine
+ * @subpackage Addons
+ * @category   Module
+ * @author     <%= authorName %>
+ * @link       <%= authorUrl %>
  */
-
 class <%= _.capitalize(addonSlug) %>_upd
 {
     public $version = '1.0.0';
@@ -33,29 +32,24 @@ class <%= _.capitalize(addonSlug) %>_upd
      */
     public function install()
     {
-        /* Module Install
-        --------------------------------------------------------------- */
-        $mod_data = array(
+        ee()->db->insert('modules', array(
             'module_name'        => '<%= _.capitalize(addonSlug) %>',
             'module_version'     => $this->version,
             'has_cp_backend'     => '<%= hasModuleCp ? "y" : "n" %>',
             'has_publish_fields' => '<%= hasModuleTab ? "y" : "n" %>',
-        );
+        ));
 
-        ee()->db->insert('modules', $mod_data);
-
-
-        /* Action Install
-        --------------------------------------------------------------- */
-        $data = array(
+        // Action Install
+        /*
+        ee()->db->insert('actions', array(
             'class'  => '<%= _.capitalize(addonSlug) %>',
             'method' => 'method_name'
-        );
-        ee()->db->insert('actions', $data);
+        ));
+        */
 
 
-        /* Custom Table Install
-        --------------------------------------------------------------- */
+        // Custom Table Install
+        /*
         ee()->load->dbforge();
 
         $fields = array(
@@ -83,6 +77,7 @@ class <%= _.capitalize(addonSlug) %>_upd
         ee()->dbforge->add_key('foreign_id');
         ee()->dbforge->add_key('site_id');
         ee()->dbforge->create_table('table_name', TRUE);
+        */
 
         return TRUE;
     }
@@ -94,21 +89,17 @@ class <%= _.capitalize(addonSlug) %>_upd
      */
     public function uninstall()
     {
-        /* Action Uninstall
-        --------------------------------------------------------------- */
-        ee()->db->where('class', '<%= _.capitalize(addonSlug) %>');
-        ee()->db->delete('actions');
+        ee()->db->where('class', '<%= _.capitalize(addonSlug) %>')->delete('actions');
 
-        /* Module Uninstall
-        --------------------------------------------------------------- */
         $mod_id = ee()->db->select('module_id')->get_where('modules', array('module_name' => '<%= _.capitalize(addonSlug) %>'))->row('module_id');
         ee()->db->where('module_id', $mod_id)->delete('module_member_groups');
         ee()->db->where('module_name', '<%= _.capitalize(addonSlug) %>')->delete('modules');
 
-        /* Custom Tables Uninstall
-        --------------------------------------------------------------- */
+        // Custom Tables Uninstall
+        /*
         ee()->load->dbforge();
         ee()->dbforge->drop_table('table_name');
+        */
 
         return TRUE;
     }

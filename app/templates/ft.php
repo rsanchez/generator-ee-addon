@@ -5,28 +5,27 @@
  *
  * @package   ExpressionEngine
  * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - 2014, EllisLab, Inc.
+ * @copyright Copyright (c) 2003 - <?= currentYear %>, EllisLab, Inc.
  * @license   http://expressionengine.com/user_guide/license.html
- * @link    http://expressionengine.com
- * @since   Version 2.0
+ * @link      http://expressionengine.com
+ * @since     Version 2.0
  * @filesource
  */
 
 /**
  * <%= addonName %> Fieldtype
  *
- * @package   ExpressionEngine
- * @subpackage  Addons
- * @category  Fieldtype
- * @author    <%= authorName %>
- * @link    <%= authorUrl %>
+ * @package    ExpressionEngine
+ * @subpackage Addons
+ * @category   Fieldtype
+ * @author     <%= authorName %>
+ * @link       <%= authorUrl %>
  */
-
-class <%= _.capitalize(addonSlug) %> {
-
+class <%= _.capitalize(addonSlug) %>
+{
     public $info = array(
-    'name' => '<%= addonName %>',
-    'version' => '1.0.0',
+        'name' => '<%= addonName %>',
+        'version' => '1.0.0',
     );
 
     public $has_array_data = <%= hasFieldtypeTagPair ? 'TRUE' : 'FALSE' %>;
@@ -281,7 +280,6 @@ class <%= _.capitalize(addonSlug) %> {
     }
 <% } %>
 }
-
 
 /* End of file ft.<%= addonSlug %>.php */
 /* Location: /system/expressionengine/third_party/<%= addonSlug %>/ft.<%= addonSlug %>.php */
