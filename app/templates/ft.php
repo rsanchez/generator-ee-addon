@@ -3,12 +3,12 @@
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package   ExpressionEngine
- * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - <?= currentYear %>, EllisLab, Inc.
- * @license   http://expressionengine.com/user_guide/license.html
- * @link      http://expressionengine.com
- * @since     Version 2.0
+ * @package     ExpressionEngine
+ * @author      ExpressionEngine Dev Team
+ * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @license     http://expressionengine.com/user_guide/license.html
+ * @link        http://expressionengine.com
+ * @since       Version 2.0
  * @filesource
  */
 
@@ -21,7 +21,7 @@
  * @author     <%= authorName %>
  * @link       <%= authorUrl %>
  */
-class <%= _.capitalize(addonSlug) %>
+class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
 {
     public $info = array(
         'name' => '<%= addonName %>',
@@ -62,7 +62,6 @@ class <%= _.capitalize(addonSlug) %>
         return $this->_display_field($data, $this->field_name);
     }
 <% if (fieldtypeLowVariablesSupport) { %>
-
     /**
      * Display Low Variable field
      **/
@@ -70,9 +69,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_display_field($data, $this->field_name);
     }
-<% } %>
-<% if (fieldtypeMatrixSupport) { %>
-
+<% } %><% if (fieldtypeMatrixSupport) { %>
     /**
      * Display Matrix cell field
      **/
@@ -80,9 +77,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_display_field($data, $this->cell_name);
     }
-<% } %>
-<% if (fieldtypeContentElementsSupport) { %>
-
+<% } %><% if (fieldtypeContentElementsSupport) { %>
     /**
      * Display Content Elements element
      **/
@@ -91,7 +86,6 @@ class <%= _.capitalize(addonSlug) %>
         return $this->_display_field($data, $this->field_name);
     }
 <% } %>
-
     /**
      * Save
      *
@@ -103,7 +97,6 @@ class <%= _.capitalize(addonSlug) %>
         return $data;
     }
 <% if (fieldtypeLowVariablesSupport) { %>
-
     /**
      * Save Low Variable
      **/
@@ -111,9 +104,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->save($data);
     }
-<% } %>
-<% if (fieldtypeMatrixSupport) { %>
-
+<% } %><% if (fieldtypeMatrixSupport) { %>
     /**
      * Save Matrix cell
      **/
@@ -122,7 +113,6 @@ class <%= _.capitalize(addonSlug) %>
         return $this->save($data);
     }
 <% } %>
-
     /**
      * Pre Process
      *
@@ -151,7 +141,6 @@ class <%= _.capitalize(addonSlug) %>
         <% } %>
     }
 <% if (fieldtypeContentElementsSupport) { %>
-
     /**
      * Replace Content Elements element tag
      **/
@@ -159,9 +148,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->replace_tag($data, $params, $tagdata);
     }
-<% } %>
-<% if (fieldtypeLowVariablesSupport) { %>
-
+<% } %><% if (fieldtypeLowVariablesSupport) { %>
     /**
      * Replace Low Variable tag
      **/
@@ -169,8 +156,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->replace_tag($data, $params, $tagdata);
     }
-<% } %>
-<% if (hasFieldtypeSettings) { %>
+<% } %><% if (hasFieldtypeSettings) { %>
     public function _display_settings($data)
     {
         return array(
@@ -192,7 +178,6 @@ class <%= _.capitalize(addonSlug) %>
         }
     }
 <% if (fieldtypeMatrixSupport) { %>
-
     /**
      * Display Matrix cell settings
      **/
@@ -200,9 +185,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_display_settings($data);
     }
-<% } %>
-<% if (fieldtypeGridSupport) { %>
-
+<% } %><% if (fieldtypeGridSupport) { %>
     /**
      * Display Grid cell settings
      **/
@@ -210,9 +193,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_display_settings($data);
     }
-<% } %>
-<% if (fieldtypeLowVariablesSupport) { %>
-
+<% } %><% if (fieldtypeLowVariablesSupport) { %>
     /**
      * Display Low Variable settings
      **/
@@ -221,7 +202,6 @@ class <%= _.capitalize(addonSlug) %>
         return $this->_display_settings($data);
     }
 <% } %>
-
     public function _save_settings($data)
     {
         return array(
@@ -241,7 +221,6 @@ class <%= _.capitalize(addonSlug) %>
         ));
     }
 <% if (fieldtypeMatrixSupport) { %>
-
     /**
      * Save Matrix cell settings
      **/
@@ -249,9 +228,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_save_settings($data);
     }
-<% } %>
-<% if (fieldtypeLowVariablesSupport) { %>
-
+<% } %><% if (fieldtypeLowVariablesSupport) { %>
     /**
      * Save Low Variable settings
      **/
@@ -259,9 +236,7 @@ class <%= _.capitalize(addonSlug) %>
     {
         return $this->_save_settings($data);
     }
-<% } %>
-<% } %>
-<% if (hasFieldtypeGlobalSettings) { %>
+<% } %><% } %><% if (hasFieldtypeGlobalSettings) { %>
     public function display_global_settings()
     {
         return form_label('license_key', 'license_key').NBS.form_input('license_key', $this->settings['license_key']);
@@ -271,15 +246,13 @@ class <%= _.capitalize(addonSlug) %>
     {
         return array_merge($this->settings, $_POST);
     }
-<% } %>
-<% if (fieldtypeGridSupport) { %>
+<% } %><% if (fieldtypeGridSupport) { %>
 
     public function accepts_content_type($name)
     {
         return $name === 'channel' || $name === 'grid';
     }
-<% } %>
-}
+<% } %>}
 
 /* End of file ft.<%= addonSlug %>.php */
 /* Location: /system/expressionengine/third_party/<%= addonSlug %>/ft.<%= addonSlug %>.php */

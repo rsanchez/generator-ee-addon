@@ -3,17 +3,17 @@
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package   ExpressionEngine
- * @author    ExpressionEngine Dev Team
- * @copyright Copyright (c) 2003 - <?= currentYear %>, EllisLab, Inc.
- * @license   http://expressionengine.com/user_guide/license.html
- * @link      http://expressionengine.com
- * @since     Version 2.0
+ * @package     ExpressionEngine
+ * @author      ExpressionEngine Dev Team
+ * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @license     http://expressionengine.com/user_guide/license.html
+ * @link        http://expressionengine.com
+ * @since       Version 2.0
  * @filesource
  */
 
 $plugin_info = array(
-    'pi_name'   => '<%= addonSlug %>',
+    'pi_name'   => '<%= addonName %>',
     'pi_version'  => '1.0.0',
     'pi_author'   => '<%= authorName %>',
     'pi_author_url' => '<%= authorUrl %>',

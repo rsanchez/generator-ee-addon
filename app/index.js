@@ -33,7 +33,6 @@ EeModuleGenerator.prototype.askFor = function askFor()
 
   this.extensionHooks = [];
   this.extensionMethods = [];
-  this.currentYear = (new Date()).getFullYear();
 
   var prompts = [
     {
@@ -232,6 +231,7 @@ EeModuleGenerator.prototype.askFor = function askFor()
 
   this.prompt(prompts, function (props)
   {
+    this.currentYear = (new Date()).getFullYear();
     this.hasPlugin = props.addonTypes.indexOf('plugin') !== -1;
     this.hasExtension = props.addonTypes.indexOf('extension') !== -1;
     this.hasModule = props.addonTypes.indexOf('module') !== -1;
