@@ -1,0 +1,11 @@
+{
+    "name": "eecli/addon-templates",
+    "description": "Templates for the eecli generate:addon command.",
+    "authors": [
+        {
+            "name": "Rob Sanchez",
+            "email": "info@robsanchez.com"
+        }
+    ],
+    "require": {}
+}
