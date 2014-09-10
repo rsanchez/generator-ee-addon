@@ -143,20 +143,11 @@ EeModuleGenerator.prototype.askFor = function askFor()
     },
     {
       type: 'confirm',
-      name: 'hasModuleMcp',
-      message: 'Does the module need an mcp file for control panel views or actions?',
-      default: true,
-      when: function(data) {
-        return data.addonTypes.indexOf('module') !== -1;
-      }
-    },
-    {
-      type: 'confirm',
       name: 'hasModuleCp',
       message: 'Does the module have a control panel backend?',
       default: false,
       when: function(data) {
-        return data.addonTypes.indexOf('module') !== -1 && data.hasModuleMcp;
+        return data.addonTypes.indexOf('module') !== -1;
       }
     },
     {
@@ -245,7 +236,6 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.authorUrl = props.authorUrl;
     this.hasExtensionSettings = props.hasExtensionSettings;
     this.hasModuleMod = props.hasModuleMod;
-    this.hasModuleMcp = props.hasModuleMcp;
     this.hasModuleCp = props.hasModuleCp;
     this.hasModuleTab = props.hasModuleTab;
     this.fieldtypeSupport = props.fieldtypeSupport || [];
@@ -339,9 +329,7 @@ EeModuleGenerator.prototype.app = function app()
     if (this.hasModuleMod) {
       this.template('mod.php', folder + '/mod.' + this.addonSlug + '.php');
     }
-    if ( ! this.hasModuleMod || this.hasModuleMcp) {
-      this.template('mcp.php', folder + '/mcp.' + this.addonSlug + '.php');
-    }
+    this.template('mcp.php', folder + '/mcp.' + this.addonSlug + '.php');
   }
 
   if (this.hasLang) {
