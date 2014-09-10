@@ -5,7 +5,7 @@
  *
  * @package     ExpressionEngine
  * @author      ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @copyright   Copyright (c) 2003 - {{currentYear}}, EllisLab, Inc.
  * @license     http://expressionengine.com/user_guide/license.html
  * @link        http://expressionengine.com
  * @since       Version 2.0
@@ -13,21 +13,21 @@
  */
 
 /**
- * <%= addonName %> Extension
+ * {{addonName}} Extension
  *
  * @package    ExpressionEngine
  * @subpackage Addons
  * @category   Extension
- * @author     <%= authorName %>
- * @link       <%= authorUrl %>
+ * @author     {{authorName}}
+ * @link       {{authorUrl}}
  */
-class <%= _.capitalize(addonSlug) %>_ext
+class {{fileName}}_ext
 {
     public $settings       = array();
-    public $description    = '<%= addonDescription %>';
+    public $description    = '{{addonDescription}}';
     public $docs_url       = '';
-    public $name           = '<%= addonName %>';
-    public $settings_exist = '<%= hasExtensionSettings ? "y" : "n" %>';
+    public $name           = '{{addonName}}';
+    public $settings_exist = '{{hasExtensionSettings}}';
     public $version        = '1.0.0';
 
     /**
@@ -55,28 +55,28 @@ class <%= _.capitalize(addonSlug) %>_ext
         // Setup custom settings in this array.
         $this->settings = array();
 
-        ee()->db->insert_batch('extensions', array(<% _.forEach(extensionHooks, function(extensionHook, index) { %>
+        ee()->db->insert_batch('extensions', array({{#each extensionHooks}}
             array(
                 'class' => __CLASS__,
-                'method' => '<%= extensionMethods[index] %>',
-                'hook' => '<%= extensionHook %>',
+                'method' => '{{method}}',
+                'hook' => '{{hook}}',
                 'settings' => serialize($this->settings),
                 'version' => $this->version,
                 'enabled' => 'y',
-            ),<% }); %>
+            ),{{/each}}
         ));
     }
-<% _.forEach(extensionHooks, function(extensionHook, index) { %>
+{{#each extensionHooks}}
     /**
-     * <%= extensionHook %> Hook
+     * {{hook}} Hook
      *
      * @param
      * @return
      */
-    public function <%= extensionMethods[index] %>()
+    public function {{method}}()
     {
     }
-<% }); %>
+{{/each}}
     /**
      * Disable Extension
      *
@@ -103,8 +103,10 @@ class <%= _.capitalize(addonSlug) %>_ext
         {
             return FALSE;
         }
+
+        ee()->db->update('extensions', array('version' => $this->version), array('class' => __CLASS__));
     }
 }
 
-/* End of file ext.<%= addonSlug %>.php */
-/* Location: /system/expressionengine/third_party/<%= addonSlug %>/ext.<%= addonSlug %>.php */
+/* End of file ext.{{addonSlug}}.php */
+/* Location: /system/expressionengine/third_party/{{addonSlug}}/ext.{{addonSlug}}.php */

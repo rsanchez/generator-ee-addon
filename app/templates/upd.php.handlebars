@@ -5,7 +5,7 @@
  *
  * @package     ExpressionEngine
  * @author      ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @copyright   Copyright (c) 2003 - {{currentYear}}, EllisLab, Inc.
  * @license     http://expressionengine.com/user_guide/license.html
  * @link        http://expressionengine.com
  * @since       Version 2.0
@@ -13,15 +13,15 @@
  */
 
 /**
- * <%= addonName %> Module Install/Update File
+ * {{addonName}} Module Install/Update File
  *
  * @package    ExpressionEngine
  * @subpackage Addons
  * @category   Module
- * @author     <%= authorName %>
- * @link       <%= authorUrl %>
+ * @author     {{authorName}}
+ * @link       {{authorUrl}}
  */
-class <%= _.capitalize(addonSlug) %>_upd
+class {{fileName}}_upd
 {
     public $version = '1.0.0';
 
@@ -33,16 +33,16 @@ class <%= _.capitalize(addonSlug) %>_upd
     public function install()
     {
         ee()->db->insert('modules', array(
-            'module_name'        => '<%= _.capitalize(addonSlug) %>',
+            'module_name'        => '{{fileName}}',
             'module_version'     => $this->version,
-            'has_cp_backend'     => '<%= hasModuleCp ? "y" : "n" %>',
-            'has_publish_fields' => '<%= hasModuleTab ? "y" : "n" %>',
+            'has_cp_backend'     => '{{hasModuleCp}}',
+            'has_publish_fields' => '{{hasModuleTab}}',
         ));
 
         // Action Install
         /*
         ee()->db->insert('actions', array(
-            'class'  => '<%= _.capitalize(addonSlug) %>',
+            'class'  => '{{fileName}}',
             'method' => 'method_name'
         ));
         */
@@ -89,11 +89,11 @@ class <%= _.capitalize(addonSlug) %>_upd
      */
     public function uninstall()
     {
-        ee()->db->where('class', '<%= _.capitalize(addonSlug) %>')->delete('actions');
+        ee()->db->where('class', '{{fileName}}')->delete('actions');
 
-        $mod_id = ee()->db->select('module_id')->get_where('modules', array('module_name' => '<%= _.capitalize(addonSlug) %>'))->row('module_id');
+        $mod_id = ee()->db->select('module_id')->get_where('modules', array('module_name' => '{{fileName}}'))->row('module_id');
         ee()->db->where('module_id', $mod_id)->delete('module_member_groups');
-        ee()->db->where('module_name', '<%= _.capitalize(addonSlug) %>')->delete('modules');
+        ee()->db->where('module_name', '{{fileName}}')->delete('modules');
 
         // Custom Tables Uninstall
         /*
@@ -115,5 +115,5 @@ class <%= _.capitalize(addonSlug) %>_upd
     }
 }
 
-/* End of file upd.<%= addonSlug %>.php */
-/* Location: /system/expressionengine/third_party/<%= addonSlug %>/upd.<%= addonSlug %>.php */
+/* End of file upd.{{addonSlug}}.php */
+/* Location: /system/expressionengine/third_party/{{addonSlug}}/upd.{{addonSlug}}.php */

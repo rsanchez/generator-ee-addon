@@ -5,7 +5,7 @@
  *
  * @package     ExpressionEngine
  * @author      ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @copyright   Copyright (c) 2003 - {{currentYear}}, EllisLab, Inc.
  * @license     http://expressionengine.com/user_guide/license.html
  * @link        http://expressionengine.com
  * @since       Version 2.0
@@ -13,15 +13,15 @@
  */
 
 /**
- * <%= addonName %> Module Front End File
+ * {{addonName}} Module Front End File
  *
  * @package    ExpressionEngine
  * @subpackage Addons
  * @category   Module
- * @author     <%= authorName %>
- * @link       <%= authorUrl %>
+ * @author     {{authorName}}
+ * @link       {{authorUrl}}
  */
-class <%= _.capitalize(addonSlug) %>
+class {{fileName}}
 {
   public $return_data;
 
@@ -33,5 +33,5 @@ class <%= _.capitalize(addonSlug) %>
 
   }
 }
-/* End of file mod.<%= addonSlug %>.php */
-/* Location: /system/expressionengine/third_party/<%= addonSlug %>/mod.<%= addonSlug %>.php */
+/* End of file mod.{{addonSlug}}.php */
+/* Location: /system/expressionengine/third_party/{{addonSlug}}/mod.{{addonSlug}}.php */

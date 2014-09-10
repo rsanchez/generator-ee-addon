@@ -5,7 +5,7 @@
  *
  * @package     ExpressionEngine
  * @author      ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @copyright   Copyright (c) 2003 - {{currentYear}}, EllisLab, Inc.
  * @license     http://expressionengine.com/user_guide/license.html
  * @link        http://expressionengine.com
  * @since       Version 2.0
@@ -13,20 +13,20 @@
  */
 
 /**
- * <%= addonName %> Accessory
+ * {{addonName}} Accessory
  *
  * @package     ExpressionEngine
  * @subpackage  Addons
  * @category    Accessory
- * @author      <%= authorName %>
- * @link        <%= authorUrl %>
+ * @author      {{authorName}}
+ * @link        {{authorUrl}}
  */
-class <%= _.capitalize(addonSlug) %>_acc
+class {{fileName}}_acc
 {
-    public $name        = '<%= addonName %>';
-    public $id          = '<%= addonSlug %>';
+    public $name        = '{{addonName}}';
+    public $id          = '{{addonSlug}}';
     public $version     = '1.0.0';
-    public $description = '<%= addonDescription %>';
+    public $description = '{{addonDescription}}';
     public $sections    = array();
 
     /**
@@ -34,9 +34,9 @@ class <%= _.capitalize(addonSlug) %>_acc
      */
     public function set_sections()
     {
-        $this->sections['<%= addonName %>'] = 'I made an accessory!';
+        $this->sections['{{addonName}}'] = 'I made an accessory!';
     }
 }
 
-/* End of file acc.<%= addonSlug %>.php */
-/* Location: /system/expressionengine/third_party/<%= addonSlug %>/acc.<%= addonSlug %>.php */
+/* End of file acc.{{addonSlug}}.php */
+/* Location: /system/expressionengine/third_party/{{addonSlug}}/acc.{{addonSlug}}.php */

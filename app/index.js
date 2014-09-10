@@ -2,10 +2,12 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var handlebarsEngine = require('yeoman-handlebars-engine');
 
 
 var EeModuleGenerator = module.exports = function EeModuleGenerator(args, options, config)
 {
+  arguments[1].engine = handlebarsEngine;
   yeoman.generators.Base.apply(this, arguments);
 };
 
@@ -32,7 +34,6 @@ EeModuleGenerator.prototype.askFor = function askFor()
   }
 
   this.extensionHooks = [];
-  this.extensionMethods = [];
 
   var prompts = [
     {
@@ -240,14 +241,15 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.hasTheme = props.hasTheme;
     this.addonName = props.addonName;
     this.addonSlug = props.addonSlug;
+    this.fileName = props.addonSlug.charAt(0).toUpperCase() + props.addonSlug.slice(1);
     this.addonDescription = props.addonDescription;
     this.authorName = props.authorName;
     this.authorUrl = props.authorUrl;
-    this.hasExtensionSettings = props.hasExtensionSettings;
+    this.hasExtensionSettings = props.hasExtensionSettings ? 'y' : 'n';
     this.hasModuleMod = props.hasModuleMod;
     this.hasModuleMcp = props.hasModuleMcp;
-    this.hasModuleCp = props.hasModuleCp;
-    this.hasModuleTab = props.hasModuleTab;
+    this.hasModuleCp = props.hasModuleCp ? 'y' : 'n';
+    this.hasModuleTab = props.hasModuleTab ? 'y' : 'n';
     this.fieldtypeSupport = props.fieldtypeSupport || [];
     this.fieldtypeMatrixSupport = this.fieldtypeSupport.indexOf('matrix') !== -1;
     this.fieldtypeGridSupport = this.fieldtypeSupport.indexOf('grid') !== -1;
@@ -255,7 +257,7 @@ EeModuleGenerator.prototype.askFor = function askFor()
     this.fieldtypeContentElementsSupport = this.fieldtypeSupport.indexOf('content_elements') !== -1;
     this.hasFieldtypeSettings = props.hasFieldtypeSettings;
     this.hasFieldtypeGlobalSettings = props.hasFieldtypeGlobalSettings;
-    this.hasFieldtypeTagPair = props.hasFieldtypeTagPair;
+    this.hasFieldtypeTagPair = props.hasFieldtypeTagPair ? 'TRUE' : 'FALSE';
     this.hasLang = (this.hasExtensionSettings || this.hasModule);
     this.systemPath = props.systemPath.replace(/\/$/, '') + '/';
     this.themePath = (this.hasTheme) ? props.themePath.replace(/\/$/, '') + '/' : null;
@@ -296,8 +298,10 @@ EeModuleGenerator.prototype.askFor = function askFor()
       }
     ], function(props) {
       if (props.extensionHook) {
-        self.extensionHooks.push(props.extensionHook);
-        self.extensionMethods.push(props.extensionMethod);
+        self.extensionHooks.push({
+          hook: props.extensionHook,
+          method: props.extensionMethod
+        });
         getExtensionHook();
       } else {
         cb();
@@ -335,34 +339,34 @@ EeModuleGenerator.prototype.app = function app()
 
   // Install module files
   if (this.hasModule) {
-    this.template('upd.php', folder + '/upd.' + this.addonSlug + '.php');
+    this.template('upd.php.handlebars', folder + '/upd.' + this.addonSlug + '.php');
     if (this.hasModuleMod) {
-      this.template('mod.php', folder + '/mod.' + this.addonSlug + '.php');
+      this.template('mod.php.handlebars', folder + '/mod.' + this.addonSlug + '.php');
     }
     if ( ! this.hasModuleMod || this.hasModuleMcp) {
-      this.template('mcp.php', folder + '/mcp.' + this.addonSlug + '.php');
+      this.template('mcp.php.handlebars', folder + '/mcp.' + this.addonSlug + '.php');
     }
   }
 
   if (this.hasLang) {
     this.mkdir(folder + '/language');
     this.mkdir(folder + '/language/english');
-    this.template('lang.php', folder + '/language/english/' + this.addonSlug + '_lang.php');
+    this.template('lang.php.handlebars', folder + '/language/english/' + this.addonSlug + '_lang.php');
   }
 
   if (this.hasExtension) {
-    this.template('ext.php', folder + '/ext.' + this.addonSlug + '.php');
+    this.template('ext.php.handlebars', folder + '/ext.' + this.addonSlug + '.php');
   }
 
   if (this.hasPlugin) {
-    this.template('pi.php', folder + '/pi.' + this.addonSlug + '.php');
+    this.template('pi.php.handlebars', folder + '/pi.' + this.addonSlug + '.php');
   }
 
   if (this.hasAccessory) {
-    this.template('acc.php', folder + '/acc.' + this.addonSlug + '.php');
+    this.template('acc.php.handlebars', folder + '/acc.' + this.addonSlug + '.php');
   }
 
   if (this.hasFieldtype) {
-    this.template('ft.php', folder + '/ft.' + this.addonSlug + '.php');
+    this.template('ft.php.handlebars', folder + '/ft.' + this.addonSlug + '.php');
   }
 };

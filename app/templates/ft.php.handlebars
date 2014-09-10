@@ -5,7 +5,7 @@
  *
  * @package     ExpressionEngine
  * @author      ExpressionEngine Dev Team
- * @copyright   Copyright (c) 2003 - <%= currentYear %>, EllisLab, Inc.
+ * @copyright   Copyright (c) 2003 - {{currentYear}}, EllisLab, Inc.
  * @license     http://expressionengine.com/user_guide/license.html
  * @link        http://expressionengine.com
  * @since       Version 2.0
@@ -13,22 +13,22 @@
  */
 
 /**
- * <%= addonName %> Fieldtype
+ * {{addonName}} Fieldtype
  *
  * @package    ExpressionEngine
  * @subpackage Addons
  * @category   Fieldtype
- * @author     <%= authorName %>
- * @link       <%= authorUrl %>
+ * @author     {{authorName}}
+ * @link       {{authorUrl}}
  */
-class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
+class {{fileName}}_ft extends EE_Fieldtype
 {
     public $info = array(
-        'name' => '<%= addonName %>',
+        'name' => '{{addonName}}',
         'version' => '1.0.0',
     );
 
-    public $has_array_data = <%= hasFieldtypeTagPair ? 'TRUE' : 'FALSE' %>;
+    public $has_array_data = {{hasFieldtypeTagPair}};
 
     /**
      * Display field
@@ -45,8 +45,8 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
         {
             $this->load->library('javascript');
 
-            $this->cp->add_to_head('<script type="text/javascript" src="'.URL_THIRD_THEMES.'<%= addonSlug %>/app.js"></script>');
-            $this->cp->add_to_head('<link rel="stylesheet" media="all" href="'.URL_THIRD_THEMES.'<%= addonSlug %>/style.css">');
+            $this->cp->add_to_head('<script type="text/javascript" src="'.URL_THIRD_THEMES.'{{addonSlug}}/app.js"></script>');
+            $this->cp->add_to_head('<link rel="stylesheet" media="all" href="'.URL_THIRD_THEMES.'{{addonSlug}}/style.css">');
 
             $this->javascript->output('');
 
@@ -61,7 +61,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_field($data, $this->field_name);
     }
-<% if (fieldtypeLowVariablesSupport) { %>
+{{#if fieldtypeLowVariablesSupport}}
     /**
      * Display Low Variable field
      **/
@@ -69,7 +69,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_field($data, $this->field_name);
     }
-<% } %><% if (fieldtypeMatrixSupport) { %>
+{{/if}}{{#if fieldtypeMatrixSupport}}
     /**
      * Display Matrix cell field
      **/
@@ -77,7 +77,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_field($data, $this->cell_name);
     }
-<% } %><% if (fieldtypeContentElementsSupport) { %>
+{{/if}}{{#if fieldtypeContentElementsSupport}}
     /**
      * Display Content Elements element
      **/
@@ -85,7 +85,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_field($data, $this->field_name);
     }
-<% } %>
+{{/if}}
     /**
      * Save
      *
@@ -96,7 +96,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $data;
     }
-<% if (fieldtypeLowVariablesSupport) { %>
+{{#if fieldtypeLowVariablesSupport}}
     /**
      * Save Low Variable
      **/
@@ -104,7 +104,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->save($data);
     }
-<% } %><% if (fieldtypeMatrixSupport) { %>
+{{/if}}{{#if fieldtypeMatrixSupport}}
     /**
      * Save Matrix cell
      **/
@@ -112,7 +112,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->save($data);
     }
-<% } %>
+{{/if}}
     /**
      * Pre Process
      *
@@ -134,13 +134,13 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
      */
     public function replace_tag($data, $params = array(), $tagdata = FALSE)
     {
-        <% if (hasFieldtypeTagPair) { %>
+        {{#if hasFieldtypeTagPair}}
         return $data ? ee()->TMPL->parse_variables($tagdata, $data) : ee()->TMPL->no_results();
-        <% } else { %>
+        {{else}}
         return $data;
-        <% } %>
+        {{/if}}
     }
-<% if (fieldtypeContentElementsSupport) { %>
+{{#if fieldtypeContentElementsSupport}}
     /**
      * Replace Content Elements element tag
      **/
@@ -148,7 +148,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->replace_tag($data, $params, $tagdata);
     }
-<% } %><% if (fieldtypeLowVariablesSupport) { %>
+{{/if}}{{#if fieldtypeLowVariablesSupport}}
     /**
      * Replace Low Variable tag
      **/
@@ -156,7 +156,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->replace_tag($data, $params, $tagdata);
     }
-<% } %><% if (hasFieldtypeSettings) { %>
+{{/if}}{{#if hasFieldtypeSettings}}
     public function _display_settings($data)
     {
         return array(
@@ -177,7 +177,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
             ee()->table->add_row($row[0], $row[1]);
         }
     }
-<% if (fieldtypeMatrixSupport) { %>
+{{#if fieldtypeMatrixSupport}}
     /**
      * Display Matrix cell settings
      **/
@@ -185,7 +185,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_settings($data);
     }
-<% } %><% if (fieldtypeGridSupport) { %>
+{{/if}}{{#if fieldtypeGridSupport}}
     /**
      * Display Grid cell settings
      **/
@@ -193,7 +193,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_settings($data);
     }
-<% } %><% if (fieldtypeLowVariablesSupport) { %>
+{{/if}}{{#if fieldtypeLowVariablesSupport}}
     /**
      * Display Low Variable settings
      **/
@@ -201,7 +201,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_display_settings($data);
     }
-<% } %>
+{{/if}}
     public function _save_settings($data)
     {
         return array(
@@ -220,7 +220,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
             'field_show_fmt' => 'n',
         ));
     }
-<% if (fieldtypeMatrixSupport) { %>
+{{#if fieldtypeMatrixSupport}}
     /**
      * Save Matrix cell settings
      **/
@@ -228,7 +228,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_save_settings($data);
     }
-<% } %><% if (fieldtypeLowVariablesSupport) { %>
+{{/if}}{{#if fieldtypeLowVariablesSupport}}
     /**
      * Save Low Variable settings
      **/
@@ -236,7 +236,7 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return $this->_save_settings($data);
     }
-<% } %><% } %><% if (hasFieldtypeGlobalSettings) { %>
+{{/if}}{{/if}}{{#if hasFieldtypeGlobalSettings}}
     public function display_global_settings()
     {
         return form_label('license_key', 'license_key').NBS.form_input('license_key', $this->settings['license_key']);
@@ -246,13 +246,14 @@ class <%= _.capitalize(addonSlug) %>_ft extends EE_Fieldtype
     {
         return array_merge($this->settings, $_POST);
     }
-<% } %><% if (fieldtypeGridSupport) { %>
+{{/if}}{{#if fieldtypeGridSupport}}
 
     public function accepts_content_type($name)
     {
         return $name === 'channel' || $name === 'grid';
     }
-<% } %>}
+{{/if}}
+}
 
-/* End of file ft.<%= addonSlug %>.php */
-/* Location: /system/expressionengine/third_party/<%= addonSlug %>/ft.<%= addonSlug %>.php */
+/* End of file ft.{{addonSlug}}.php */
+/* Location: /system/expressionengine/third_party/{{addonSlug}}/ft.{{addonSlug}}.php */
